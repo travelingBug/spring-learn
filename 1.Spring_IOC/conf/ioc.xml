@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 通过abstract属性创建一个模板bea -->
+<!-- 	<bean id="person01" class="com.wondersgroup.bean.Person" abstract="true">
+		<property name="age" value="18"></property>
+		<property name="email" value="xxx@wondersgroup.com"></property>
+	</bean> -->
+	
+	<!-- 实验5 使用parent属性  parent：指定了继承于哪个bean -->
+	<!-- <bean id="person02"  class="com.wondersgroup.bean.Person" parent="person01">
+		<property name="lastName" value="小花"></property>
+	</bean> -->
+	<!-- 去掉class属性 -->
+	<!-- <bean id="person03"  parent="person01">
+		<property name="lastName" value="小明"></property>
+	</bean> -->
+	
+	<!-- 实验8：bean之间的依赖 
+		改变bean的创建顺序
+		只是改变了bean的创建顺序
+	-->
+	<bean id="car" class="com.wondersgroup.bean.Car" depends-on="person,book"></bean>
+	<bean id="person" class="com.wondersgroup.bean.Person"></bean>
+	<bean id="book" class="com.wondersgroup.bean.Book"></bean>
+	
+	
+	
+</beans>
