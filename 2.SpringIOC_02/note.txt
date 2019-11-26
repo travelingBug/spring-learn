@@ -1,0 +1,22 @@
+核心容器
+spring-aop-4.0.0.RELEASE.jar
+spring-beans-4.0.0.RELEASE.jar
+spring-context-4.0.0.RELEASE.jar
+spring-core-4.0.0.RELEASE.jar
+commons-logging-1.1.1.jar (Spring运行的时候需要一个日志包，没有的话报错)
+
+
+实验1： 通过IOC容器创建对象，并为属性赋值
+
+实验2： 根据bean类型从IOC容器中获取bean的实例
+
+实验3：
+	 通过构造器为bean的属性赋值（index,type属性介绍）
+	 通过p名称空间为bean属性赋值
+ 
+ 实验4： 正确的为各种属性赋值
+	 测试使用null值、引用类型（引用其他bean、内部bean）
+	 集合类型赋值（List Map properties）
+	util名称空间创建集合类型的bean
+	 级联属性赋值
+ 
