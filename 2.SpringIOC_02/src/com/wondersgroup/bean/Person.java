@@ -11,6 +11,7 @@ public class Person {
 	private String gender;
 	private String email;
 	
+	private Double salary;
 
 	private Car car;
 
@@ -21,6 +22,22 @@ public class Person {
 
 	private Properties properties;
 	
+
+	public Person(List<Book> books) {
+		super();
+		this.books = books;
+	}
+
+	public Person(Car car, List<Book> books) {
+		super();
+		this.car = car;
+		this.books = books;
+	}
+
+	public Person(Car car) {
+		super();
+		this.car = car;
+	}
 
 	public Car getCar() {
 		return car;
@@ -117,12 +134,24 @@ public class Person {
 	public void setProperties(Properties properties) {
 		this.properties = properties;
 	}
+	
+	
+
+	public Double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(Double salary) {
+		this.salary = salary;
+	}
 
 	@Override
 	public String toString() {
-		return "Person [lastName=" + lastName + ", age=" + age + ", gender=" + gender + ", email=" + email + ", maps="
-				+ maps + ", car=" + car + ", books=" + books + "]";
+		return "Person [lastName=" + lastName + ", age=" + age + ", gender=" + gender + ", email=" + email + ", salary="
+				+ salary + ", car=" + car + ", books=" + books + "]";
 	}
+
+	 
 
 	 
 

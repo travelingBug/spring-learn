@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="car2" class="com.wondersgroup.bean.Car">
+		<property name="brand" value="宝马"></property>
+		<property name="color" value="橙色"></property>
+	</bean>
+	
+	<!-- <bean id="car1" class="com.wondersgroup.bean.Car">
+		<property name="brand" value="奔驰"></property>
+		<property name="color" value="红色"></property>
+	</bean> -->
+	
+	<!-- 为Person里面自定义属性赋值
+		<property>标签是手动赋值方式
+		另外一种赋值方式：自动装配（自动赋值）
+		autowire="default/no";不自动装配，不自动为car赋值
+		//按照某种规则自动装配
+		autowire="byName"
+			private Car car;
+				以属性名为id在容器中寻找到这个组件，给它赋值，如果找不到就装配null
+		autowire="byType"
+			1)以属性的类型作为查找依据去容器中找到对应的注册组件，如果容器中有多个这种类型的组件，报错：
+				org.springframework.beans.factory.UnsatisfiedDependencyException:
+				Error creating bean with name 'person' defined in class path resource [ioc3.xml]: Unsatisfied dependency expressed through bean property 'car': : No qualifying bean of type [com.wondersgroup.bean.Car] is defined: expected single matching bean but found 2: car2,car; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type [com.wondersgroup.bean.Car] is defined: expected single matching bean but found 2: car2,car
+	 		2)没有找到，就装配null
+	 		等同 car = ioc.getBean(Car.class);
+		autowire="constructor"
+			按照构造器赋值	
+			1）首先按照构造器参数的类型进行匹配（成功就赋值） 没有就直接组件装配null即可
+			2）如果按照类型找到了多个， 那么按照参数名作为id继续查找，找到就装配，找不到就赋值null
+			3）不会报错
+	 -->
+	<bean id="person" class="com.wondersgroup.bean.Person" autowire="constructor"></bean>
+	
+	
+	<!--
+	 	private List<Book> books;
+		容器可用把容器中所有book封装成List赋值给这个属性
+	 -->
+	<bean id="book01" class="com.wondersgroup.bean.Book">
+		<constructor-arg name="author" value="吴承恩"></constructor-arg>
+		<constructor-arg value="西游记"></constructor-arg>
+	</bean>
+	
+	<!-- 
+	org.springframework.beans.factory.BeanCreationException: 
+	Error creating bean with name 'book02' defined in class path resource [ioc3.xml]: 
+	Could not resolve matching constructor (hint: specify index/type/name arguments for simple parameters to avoid type ambiguities)
+	 
+	 -->
+	<bean id="book02" class="com.wondersgroup.bean.Book">
+		<constructor-arg name="author" value="施耐庵"></constructor-arg>
+		<constructor-arg index="0" value="水浒传"></constructor-arg>
+	</bean>
+	
+	<bean id="book03" class="com.wondersgroup.bean.Book">
+		<constructor-arg name="author" value="罗贯中"></constructor-arg>
+		<constructor-arg name="bookName" value="三国演义"></constructor-arg>
+	</bean>
+	
+	
+	<!-- 
+	### 实验14 SpEL测试
+
+	#### 在SpEL中使用字面量
+	
+	#### 引用其他bean
+	
+	#### 引用其他bean下的某个属性
+	
+	#### 调用非静态方法
+	
+	#### 调用静态方法
+	
+	#### 使用运算符
+	
+	 -->
+	 <bean id="person04" class="com.wondersgroup.bean.Person">
+		 <!-- 在SpEL中使用字面量 -->
+	 	<property name="salary" value="#{11000*12}"></property>
+	 	<!-- 引用其他bean下的某个属性 -->
+	 	<property name="lastName" value="#{book01.author}"></property>
+	 	<!-- 引用其他bean -->
+	 	<property name="car" value="#{car2}"></property>
+	 	
+	 	<!-- 调用静态方法 
+	 		T(类的全限定名).静态方法名称(参数1,参数2,...,参数N)
+	 	-->
+	 	<property name="email" value="#{T(java.util.UUID).randomUUID().toString()}"></property>
+	 	
+	 	<!-- 调用非静态方法
+	 		   org.springframework.beans.factory.BeanExpressionException: 
+	 		   Expression parsing failed; 
+	 		   nested exception is org.springframework.expression.spel.SpelEvaluationException:
+	 		    EL1008E:(pos 0): Field or property 'book1' cannot be found on object of type 'org.springframework.beans.factory.config.BeanExpressionContext'
+	 	
+	 	 -->
+	 	<property name="gender" value="#{book01.getAuthor()}"></property>
+	 </bean>
+
+</beans>
