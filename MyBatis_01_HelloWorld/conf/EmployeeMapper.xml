@@ -1,0 +1,15 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace:名称空间
+ -->    
+<mapper namespace="com.wonders.mybatis.bean.Employee">
+<!-- 
+	id:唯一标识
+	resultType：返回值类型
+	#{id} ：从传过来的参数中取出id值
+ -->
+     <select id="selectEmp" resultType="com.wonders.mybatis.bean.Employee">
+     	select *  from tbl_employee where id = #{id}
+     </select>
+
+</mapper>
