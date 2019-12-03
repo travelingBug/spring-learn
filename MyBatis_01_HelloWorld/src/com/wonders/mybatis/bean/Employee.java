@@ -1,5 +1,8 @@
 package com.wonders.mybatis.bean;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias(value = "myEmployee")
 public class Employee {
 	
 	private Integer id;

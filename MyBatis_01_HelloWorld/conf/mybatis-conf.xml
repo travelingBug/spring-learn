@@ -3,17 +3,54 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<!-- 配置文件分离
+		数据信息抽取
+		1、mybatis使用<properties>标签来因为外部properties配置文件的内容
+		resource：引入类路径下的配置
+		url:引入网络或者磁盘下的配置
+	 -->
+	<properties resource="dbconfig.properties"  ></properties>
+	<!--2、 settings包含很多重要的设置项
+		setting：用来设置某一个设置项
+			name:设置项名称
+			value：设置项取值
+	 -->
+	 <settings>		   
+	 	<setting name="mapUnderscoreToCamelCase" value="true"/>
+	 </settings>
+	 
+	 <!--3、 typeAliases：别名处理器，可用为我们的java类型起别名 
+	 	type:被指定别名的类型的全类名。默认别名是类的simpleName，并且首字母小写。
+	 	注意：别名大小写不敏感
+	 -->
+	<!--  <typeAliases>
+	 	<typeAlias type="com.wonders.mybatis.bean.Employee" />
+	 </typeAliases> -->
+	 <!-- 
+Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+### Cause: org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'EmployeeMapper.xml'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'employee'.  Cause: java.lang.ClassNotFoundException: Cannot find class: employee
+	  -->
+	 <!-- 可用不使用默认别名 -->
+	 <!-- <typeAliases>
+	 	<typeAlias type="com.wonders.mybatis.bean.Employee"  alias="myemployee"/>
+	 </typeAliases> -->
+	 <!-- 为整个包起别名 -->
+	 <typeAliases>
+	 	<package name="com.wonders.mybatis.bean"/>
+	 </typeAliases>
+	 <!-- 批量起别名（使用package为整个包下的类起别名），使用@Alias注解为指定的类起新的别名 -->
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://localhost:3306/mybatis" />
-                <property name="username" value="root" />
-                <property name="password" value="1234" />
+                <property name="driver" value="${mysql.driver}" />
+                <property name="url" value="${mysql.url}" />
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}" />
             </dataSource>
         </environment>
     </environments>
+    
     <!-- 将我们写好的SQL映射文件，一定要注册在全局配置文件中 -->
     <mappers>
         	<mapper resource="EmployeeMapper.xml"/>
